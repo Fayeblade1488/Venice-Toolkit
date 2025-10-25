@@ -1,0 +1,44 @@
+{
+  "apiProviders": {
+    "default": "Google Gemini",
+    "available": [
+      "Venice.ai",
+      "Google Gemini", 
+      "OpenAI-Compatible",
+      "Perplexity",
+      "xAI"
+    ]
+  },
+  "security": {
+    "encryption": {
+      "algorithm": "AES-GCM",
+      "keyDerivation": "PBKDF2",
+      "iterations": 250000,
+      "salt": "a-fixed-salt-for-prototype"
+    },
+    "webFetch": {
+      "allowlist": [
+        "docs.perplexity.ai",
+        "ai.google.dev",
+        "platform.openai.com",
+        "docs.anthropic.com"
+      ],
+      "proxy": "https://api.allorigins.win/raw?url="
+    }
+  },
+  "ui": {
+    "theme": "dark",
+    "defaultAnalysisMode": "web",
+    "defaultAspectRatio": "1:1",
+    "maxConcurrentRequests": 3
+  },
+  "cache": {
+    "modelListTtlHours": 24,
+    "analysisResultTtlHours": 48
+  },
+  "limits": {
+    "maxUploadSizeMB": 10,
+    "maxTextLength": 200000,
+    "maxConcurrentOperations": 5
+  }
+}

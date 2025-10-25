@@ -1,0 +1,148 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "title": "Venice-ToolKit Configuration Schema",
+  "description": "Configuration schema for the Venice-ToolKit application",
+  "properties": {
+    "apiProviders": {
+      "type": "object",
+      "properties": {
+        "default": {
+          "type": "string",
+          "enum": ["Venice.ai", "Google Gemini", "OpenAI-Compatible", "Perplexity", "xAI"],
+          "description": "Default AI provider to use"
+        },
+        "available": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["Venice.ai", "Google Gemini", "OpenAI-Compatible", "Perplexity", "xAI"]
+          },
+          "description": "List of available AI providers"
+        }
+      },
+      "required": ["default", "available"]
+    },
+    "security": {
+      "type": "object",
+      "properties": {
+        "encryption": {
+          "type": "object",
+          "properties": {
+            "algorithm": {
+              "type": "string",
+              "enum": ["AES-GCM"],
+              "description": "Encryption algorithm used for API keys"
+            },
+            "keyDerivation": {
+              "type": "string",
+              "enum": ["PBKDF2"],
+              "description": "Key derivation function"
+            },
+            "iterations": {
+              "type": "integer",
+              "minimum": 10000,
+              "maximum": 1000000,
+              "description": "Number of iterations for key derivation"
+            },
+            "salt": {
+              "type": "string",
+              "description": "Fixed salt for key derivation"
+            }
+          },
+          "required": ["algorithm", "keyDerivation", "iterations", "salt"]
+        },
+        "webFetch": {
+          "type": "object",
+          "properties": {
+            "allowlist": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "format": "hostname"
+              },
+              "description": "List of allowed domains for web fetching"
+            },
+            "proxy": {
+              "type": "string",
+              "format": "uri",
+              "description": "Proxy endpoint for web fetching"
+            }
+          },
+          "required": ["allowlist", "proxy"]
+        }
+      },
+      "required": ["encryption", "webFetch"]
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "theme": {
+          "type": "string",
+          "enum": ["dark", "light"],
+          "description": "Default UI theme"
+        },
+        "defaultAnalysisMode": {
+          "type": "string",
+          "enum": ["web", "image_analysis", "video_analysis", "search_grounding", "complex_query", "image_generation", "tts", "audio_transcription"],
+          "description": "Default analysis mode"
+        },
+        "defaultAspectRatio": {
+          "type": "string",
+          "enum": ["1:1", "16:9", "9:16"],
+          "description": "Default aspect ratio for image generation"
+        },
+        "maxConcurrentRequests": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 10,
+          "description": "Maximum number of concurrent API requests"
+        }
+      },
+      "required": ["theme", "defaultAnalysisMode", "defaultAspectRatio", "maxConcurrentRequests"]
+    },
+    "cache": {
+      "type": "object",
+      "properties": {
+        "modelListTtlHours": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 168,
+          "description": "TTL for cached model lists in hours"
+        },
+        "analysisResultTtlHours": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 720,
+          "description": "TTL for cached analysis results in hours"
+        }
+      },
+      "required": ["modelListTtlHours", "analysisResultTtlHours"]
+    },
+    "limits": {
+      "type": "object",
+      "properties": {
+        "maxUploadSizeMB": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 100,
+          "description": "Maximum upload size in MB"
+        },
+        "maxTextLength": {
+          "type": "integer",
+          "minimum": 1000,
+          "maximum": 1000000,
+          "description": "Maximum text length for analysis"
+        },
+        "maxConcurrentOperations": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 20,
+          "description": "Maximum number of concurrent operations"
+        }
+      },
+      "required": ["maxUploadSizeMB", "maxTextLength", "maxConcurrentOperations"]
+    }
+  },
+  "required": ["apiProviders", "security", "ui", "cache", "limits"]
+}
