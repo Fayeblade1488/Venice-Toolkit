@@ -32,7 +32,7 @@
     "@testing-library/react": "^16.0.0",
     "@testing-library/jest-dom": "^6.4.6",
     "@testing-library/user-event": "^14.5.2",
-    "happy-dom": "^14.12.3",
+    "happy-dom": "^20.0.8",
     "@eslint/js": "^9.0.0",
     "eslint": "^9.0.0",
     "eslint-plugin-react-hooks": "^5.0.0",
