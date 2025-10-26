@@ -584,9 +584,14 @@ const App: React.FC = () => {
         // Revoke the previous URL to prevent memory leaks
         if (imagePreview) URL.revokeObjectURL(imagePreview);
         const f = e.target.files?.[0]; 
-        if(f){
-          setImageFile(f); 
-          setImagePreview(URL.createObjectURL(f));
+        if (f) {
+          // Check MIME type before allowing Object URL
+          if (f.type.startsWith("image/")) {
+            setImageFile(f); 
+            setImagePreview(URL.createObjectURL(f));
+          } else {
+            setError("Please upload a valid image file.");
+          }
         }
       }} className="w-full text-sm text-[#bdbdbd] file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-[#f75060]/20 file:text-[#f75060] hover:file:bg-[#f75060]/30 transition" required />;
       case AnalysisMode.VIDEO_ANALYSIS: return <input type="file" accept="video/*" onChange={(e) => {
