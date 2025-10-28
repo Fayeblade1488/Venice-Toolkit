@@ -12,35 +12,66 @@ const ScrapedDataDisplay: React.FC<ScrapedDataDisplayProps> = ({ data }) => {
   }
 
   return (
-    <div className="glassmorphic p-6 rounded-2xl">
-      <h2 className="text-2xl font-bold mb-4 text-[#fbc02d]">Scraped Data</h2>
+    <div className="glass p-6 rounded-[var(--md-shape-radius-xl)]">
+      <div className="flex items-center gap-3 mb-6">
+        <span className="text-3xl">🌐</span>
+        <h2 className="text-2xl font-bold text-[#fffbfe]">Scraped Data</h2>
+        <span className="ml-auto text-sm font-medium text-[#cac7d0]">{data.titles.length} items found</span>
+      </div>
+
       <div className="space-y-5">
-        <div>
-          <h3 className="font-semibold text-lg text-[#fafafa] mb-2">Titles Found</h3>
-          <ul className="list-disc list-inside space-y-1 text-[#bdbdbd] max-h-40 overflow-y-auto pr-2">
-            {data.titles.slice(0, 10).map((title, i) => <li key={i}>{title}</li>)}
-             {data.titles.length > 10 && <li className="text-[#616161]">... and {data.titles.length - 10} more</li>}
-          </ul>
-        </div>
-        <div>
-          <h3 className="font-semibold text-lg text-[#fafafa] mb-2">Links Found (Top 10)</h3>
-          <ul className="list-disc list-inside space-y-1 text-[#bdbdbd] max-h-40 overflow-y-auto pr-2">
-            {data.links.slice(0, 10).map((link, i) => (
-              <li key={i} className="truncate">
-                <a href={link} target="_blank" rel="noopener noreferrer" className="text-[#1976d2] hover:underline hover:text-[#42a5f5] transition-colors">
-                  {link}
-                </a>
-              </li>
+        {/* Titles */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xl">📋</span>
+            <h3 className="font-semibold text-lg text-[#fffbfe]">Titles</h3>
+            <span className="text-xs bg-[rgba(139,92,246,0.2)] px-2 py-1 rounded-full text-[#fffbfe]">{data.titles.length}</span>
+          </div>
+          <div className="bg-[rgba(0,0,0,0.2)] p-4 rounded-[var(--md-shape-radius-lg)] max-h-40 overflow-y-auto space-y-1">
+            {data.titles.slice(0, 10).map((title, i) => (
+              <p key={i} className="text-sm text-[#cac7d0]">• {title}</p>
             ))}
-             {data.links.length > 10 && <li className="text-[#616161]">... and {data.links.length - 10} more</li>}
-          </ul>
+            {data.titles.length > 10 && <p className="text-xs text-[#cac7d0]/50">+ {data.titles.length - 10} more titles</p>}
+          </div>
         </div>
-        <div>
-          <h3 className="font-semibold text-lg text-[#fafafa] mb-2">Text Snippet</h3>
-          <p className="bg-[#1e1e1e]/70 p-3 rounded-lg text-[#bdbdbd] text-sm max-h-48 overflow-y-auto border border-[#424242]">
-            {data.text.substring(0, 1000) || "No text content found."}
-            {data.text.length > 1000 && '...'}
-          </p>
+
+        {/* Links */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xl">🔗</span>
+            <h3 className="font-semibold text-lg text-[#fffbfe]">Links</h3>
+            <span className="text-xs bg-[rgba(139,92,246,0.2)] px-2 py-1 rounded-full text-[#fffbfe]">{data.links.length}</span>
+          </div>
+          <div className="bg-[rgba(0,0,0,0.2)] p-4 rounded-[var(--md-shape-radius-lg)] max-h-40 overflow-y-auto space-y-1">
+            {data.links.slice(0, 10).map((link, i) => (
+              <p key={i} className="truncate">
+                <a 
+                  href={link} 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-sm text-[#8b5cf6] hover:text-[#a78bfa] smooth-transition"
+                >
+                  {link.length > 60 ? link.substring(0, 60) + '...' : link}
+                </a>
+              </p>
+            ))}
+            {data.links.length > 10 && <p className="text-xs text-[#cac7d0]/50">+ {data.links.length - 10} more links</p>}
+          </div>
+        </div>
+
+        {/* Text Snippet */}
+        <div className="space-y-2">
+          <div className="flex items-center gap-2">
+            <span className="text-xl">📄</span>
+            <h3 className="font-semibold text-lg text-[#fffbfe]">Text Snippet</h3>
+            <span className="text-xs text-[#cac7d0]">{Math.round(data.text.length / 100) * 100} chars</span>
+          </div>
+          <div className="bg-[rgba(0,0,0,0.2)] p-4 rounded-[var(--md-shape-radius-lg)] max-h-48 overflow-y-auto border border-[rgba(255,255,255,0.05)]">
+            <p className="text-[#cac7d0] text-sm leading-relaxed">
+              {data.text.substring(0, 1000) || "No text content found."}
+              {data.text.length > 1000 && '...'}
+            </p>
+          </div>
         </div>
       </div>
     </div>

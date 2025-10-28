@@ -25,7 +25,6 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecordingComplete, disa
           const audioBlob = new Blob(audioChunksRef.current, { type: 'audio/webm' });
           onRecordingComplete(audioBlob);
           audioChunksRef.current = [];
-          // Stop all tracks to release the microphone
           stream.getTracks().forEach(track => track.stop());
         };
         mediaRecorderRef.current.start();
@@ -55,23 +54,30 @@ const AudioRecorder: React.FC<AudioRecorderProps> = ({ onRecordingComplete, disa
   };
 
   return (
-    <div className="flex flex-col items-center justify-center p-4 bg-black/20 rounded-lg border border-[#424242]">
+    <div className="flex flex-col items-center justify-center p-6 glass rounded-[var(--md-shape-radius-lg)] border border-[rgba(255,255,255,0.1)]">
       <button
         onClick={handleButtonClick}
         disabled={disabled}
-        className={`px-6 py-3 rounded-full text-white font-semibold transition-all duration-300 flex items-center space-x-2 ${
+        className={`px-6 py-3 rounded-[var(--md-shape-radius-lg)] text-white font-semibold smooth-transition flex items-center gap-3 ${
           isRecording 
-            ? 'bg-[#d32f2f] hover:bg-[#f75060]' 
-            : 'bg-[#1976d2] hover:bg-[#42a5f5]'
-        } disabled:bg-[#424242] disabled:cursor-not-allowed`}
+            ? 'bg-gradient-to-br from-red-500 to-red-600 hover:from-red-600 hover:to-red-700' 
+            : 'bg-gradient-to-br from-[#8b5cf6] to-[#6d28d9] hover:from-[#a78bfa] hover:to-[#7c3aed]'
+        } disabled:opacity-50 disabled:cursor-not-allowed`}
       >
-        <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d={isRecording ? "M21 12V3H3v9m18 4a9 9 0 11-18 0 9 9 0 0118 0z" : "M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z"} />
-        </svg>
+        <span className="text-xl">{isRecording ? '⏹️' : '🎤'}</span>
         <span>{isRecording ? 'Stop Recording' : 'Start Recording'}</span>
       </button>
-      {isRecording && <p className="text-sm text-[#bdbdbd] mt-3 animate-pulse">Recording in progress...</p>}
-      {error && <p className="text-[#d32f2f] text-sm mt-3">{error}</p>}
+      {isRecording && (
+        <div className="mt-4 flex items-center gap-2">
+          <div className="w-3 h-3 bg-red-500 rounded-full animate-pulse"></div>
+          <p className="text-sm text-[#fffbfe]">Recording in progress...</p>
+        </div>
+      )}
+      {error && (
+        <div className="mt-4 text-sm text-red-400 text-center">
+          <p>⚠️ {error}</p>
+        </div>
+      )}
     </div>
   );
 };

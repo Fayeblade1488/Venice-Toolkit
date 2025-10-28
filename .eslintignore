@@ -1,0 +1,15 @@
+node_modules/
+dist/
+build/
+coverage/
+*.min.js
+*.min.css
+public/
+.DS_Store
+.env*
+.nyc_output/
+coverage/
+.git/
+.vscode/
+.idea/
+*.log
