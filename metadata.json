@@ -1,0 +1,7 @@
+{
+  "name": "FayeBlade's Venice Toolbox",
+  "description": "A browser-based web scraper that uses Gemini or an OpenAI-compatible API to analyze web page content. It allows for custom URL input, performs DOM parsing via a proxy, and provides insights like sentiment, content summary, and key trends. Built for prototyping in environments like Google AI Studio.",
+  "requestFramePermissions": [
+    "microphone"
+  ]
+}
